@@ -60,48 +60,48 @@ TCP Connection Termination
         5. TIME-WAIT   --> <SEQ=101><ACK=301><CTL=ACK>      --> CLOSED
         6. (2 MSL)
            CLOSED
-                        Normal Close Sequence
+                      Normal Close Sequence
 
-<pre>
-________________________________________________________________________________
-    CLIENT                                                  SERVER
--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-                       |                                  | socket, bind, listen
-                       |                                  | LISTEN (passive open)
-                       |                                  | accept (blocks)
-socket                 |                                  |
-connect (blocks)       |                                  |
-(active open) SYN_SENT |>>>>>>>>>>>>> SYN J, MSS=536      |
-                       |             >>>>>>>>>>>>>>>>>>>>>| SYN_RCVD
-                       | SYN K, ACK J+1, MSS=1460<<<<<<<<<|
-ESTABLISHED            |<<<<<<<<<<<<<<<<<<<<              |
-connect returns        |>>>>>>>>>>>>>>>       ACK K+1     |
-                       |               >>>>>>>>>>>>>>>>>>>| ESTABLISHED
-                       |                                  | accept return
-                       |                                  | read (blocks)
-                       |                                  |
-write                  |>>>>>>>>>>>>>>>  data (request)   |
-read (blocks)          |               >>>>>>>>>>>>>>>>>>>| read returns
-                       |                                  |
-                       |                                  |
-                       | date (reply), ACK (request)<<<<<<| write
-read returns           |<<<<<<<<<<<<<<<<<<<               | read (blocks)
-                       |>>>>>>>>>>>>>>>>>>> ACK reply     |
-                       |                   >>>>>>>>>>>>>>>|
-close                  |                                  |
-(active close)         |>>>>>>>>>>>>>>>>>>>               |
-FIN_WAIT_1             |                  > FIN M         |
-                       |                  >>>>>>>>>>>>>>>>| CLOSE_WAIT (passive close)
-                       |                 <<<<<<<<<<<<<<<<<| read returns 0 (eof)
-                       | ACK M+1         <<               |
-FIN_WAIT_2             |<<<<<<<<<<<<<<<<<                 |
-                       |                                  | close
-                       | FIN N           <<<<<<<<<<<<<<<<<| LAST_ACK
-TIME_WAIT              |<<<<<<<<<<<<<<<<<<    ACK N+1     |
-                       |>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>| CLOSED
-                       |                                  |
-_________________________________________________________________________________
-</pre>
+###State Table
+
+        ________________________________________________________________________________
+            CLIENT                                                  SERVER
+        -+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+                               |                                  | socket, bind, listen
+                               |                                  | LISTEN (passive open)
+                               |                                  | accept (blocks)
+        socket                 |                                  |
+        connect (blocks)       |                                  |
+        (active open) SYN_SENT |>>>>>>>>>>>>> SYN J, MSS=536      |
+                               |             >>>>>>>>>>>>>>>>>>>>>| SYN_RCVD
+                               | SYN K, ACK J+1, MSS=1460<<<<<<<<<|
+        ESTABLISHED            |<<<<<<<<<<<<<<<<<<<<              |
+        connect returns        |>>>>>>>>>>>>>>>       ACK K+1     |
+                               |               >>>>>>>>>>>>>>>>>>>| ESTABLISHED
+                               |                                  | accept return
+                               |                                  | read (blocks)
+                               |                                  |
+        write                  |>>>>>>>>>>>>>>>  data (request)   |
+        read (blocks)          |               >>>>>>>>>>>>>>>>>>>| read returns
+                               |                                  |
+                               |                                  |
+                               | date (reply), ACK (request)<<<<<<| write
+        read returns           |<<<<<<<<<<<<<<<<<<<               | read (blocks)
+                               |>>>>>>>>>>>>>>>>>>> ACK reply     |
+                               |                   >>>>>>>>>>>>>>>|
+        close                  |                                  |
+        (active close)         |>>>>>>>>>>>>>>>>>>>               |
+        FIN_WAIT_1             |                  > FIN M         |
+                               |                  >>>>>>>>>>>>>>>>| CLOSE_WAIT (passive close)
+                               |                 <<<<<<<<<<<<<<<<<| read returns 0 (eof)
+                               | ACK M+1         <<               |
+        FIN_WAIT_2             |<<<<<<<<<<<<<<<<<                 |
+                               |                                  | close
+                               | FIN N           <<<<<<<<<<<<<<<<<| LAST_ACK
+        TIME_WAIT              |<<<<<<<<<<<<<<<<<<    ACK N+1     |
+                               |>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>| CLOSED
+                               |                                  |
+        _________________________________________________________________________________
 
 
 * CLOSE_WAIT
