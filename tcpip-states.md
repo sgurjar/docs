@@ -104,13 +104,13 @@ ________________________________________________________________________________
 </pre>
 
 
-CLOSE_WAIT
-CLOSED
-ESTABLISHED
-FIN_WAIT_1
-FIN_WAIT_2
-LAST_ACK
-LISTEN
-SYN_RECEIVED
-SYN_SEND
-TIMED_WAIT
+* CLOSE_WAIT
+* CLOSED
+* ESTABLISHED
+* FIN_WAIT_1
+* FIN_WAIT_2
+* LAST_ACK
+* LISTEN
+* SYN_RECEIVED
+* SYN_SEND
+* TIMED_WAIT
