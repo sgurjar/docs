@@ -26,7 +26,7 @@ The problem is that in the absence of synchronization, there is no guarantee as
 to when, if ever, the background thread will see the change in the value of
 `stopRequested` that was made by the main thread.
 
-In the absence of synchronization, it’s quite acceptable for the virtual
+In the absence of synchronization, it's quite acceptable for the virtual
 machine to transform this code:
 
         while (!done)
@@ -115,9 +115,9 @@ here `nextSerialNumber++` requires to read existing value in order to increment
 it. Two or more threads can reads same value and return same number.
 
 One way to fix the `generateSerialNumber` method is to add the `synchronized`
-modifier to its declaration. This ensures that multiple invocations won’t be
+modifier to its declaration. This ensures that multiple invocations won't be
 interleaved, and that each invocation will see the effects of all previous
-invocations. Once you’ve done that, you can and should remove the volatile
+invocations. Once you've done that, you can and should remove the volatile
 modifier from nextSerialNumber.
 
 ###Using `j.u.c.atomic`
