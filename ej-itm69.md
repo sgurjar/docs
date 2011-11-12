@@ -80,3 +80,28 @@ accidental or malicious notifications on a publicly accessible object, using `no
 in place of `notify` protects against accidental or malicious waits by an
 unrelated thread. Such waits could otherwise "swallow" a critical notification,
 leaving its intended recipient waiting indefinitely.
+
+###from [[concurrency-interest] Propagation of signals to non-interrupted thread](http://cs.oswego.edu/pipermail/concurrency-interest/2011-November/008366.html)
+
+[1](http://cs.oswego.edu/pipermail/concurrency-interest/2011-November/008371.html)
+Spurious wakeups should always be considered possible even if the hardware and
+JVM don't allow it.  LockSupport.unpark() can be called by any thread in any
+piece of code. It has a globally accessible flag. One piece of code could call
+`unpark()` and cause what seems to be a __spurious__ wakeup in another piece of code.
+
+For example, let's say some buggy code allows for two threads (A & B) to call
+`LockSupport.unpark()` on the same thread (C). Thread A calls unpark(). Thread C
+wakes up exits that piece of code and then goes into another piece of code.
+Thread C then calls `LockSupport.park()`. Thread B gets some CPU time and calls
+`LockSupport.unpark()` on Thread C. Thread C now wakes up and thinks it has been
+signaled correctly. This problem is really tough to debug because the two
+pieces of code are completely unrelated except via LockSupport.
+
+Coding for spurious wakeups (i.e. rechecking the condition) is always a good
+thing. Sure the piece of code you are looking at could be perfect. But, some
+other piece of code which you have never seen could be doing things in a way
+that breaks your code.
+
+[2](http://cs.oswego.edu/pipermail/concurrency-interest/2011-November/008377.html)
+"Always call wait/await in a loop. If you don't, you will have mysterious
+failures in production."
