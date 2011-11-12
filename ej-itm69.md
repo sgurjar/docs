@@ -54,7 +54,7 @@ method of a publicly accessible object is susceptible to this problem.
 For example, the notifying thread might invoke notifyAll even if only some
 of the waiting threads have their condition satisfied.
 
-• The waiting thread could (rarely) wake up in the absence of a `notify`. This is
+* The waiting thread could (rarely) wake up in the absence of a `notify`. This is
 known as a __spurious__ wakeup [Posix, 11.4.3.6.1; JavaSE6].
 
 ###A related issue is whether you should use `notify` or `notifyAll` to wake
@@ -65,9 +65,9 @@ and notifyAll wakes all waiting threads.
 
 It is often said that you should always use `notifyAll`. This is reasonable,
 conservative advice. It will always yield correct results because it guarantees
-that you’ll wake the threads that need to be awakened. You may wake some other
-threads, too, but this won’t affect the correctness of your program. These
-threads will check the condition for which they’re waiting and, finding it
+that you'll wake the threads that need to be awakened. You may wake some other
+threads, too, but this won't affect the correctness of your program. These
+threads will check the condition for which they're waiting and, finding it
 false, will continue waiting.
 
 As an optimization, you may choose to invoke `notify` instead of `notifyAll`
