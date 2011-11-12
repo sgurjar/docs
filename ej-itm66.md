@@ -68,7 +68,7 @@ This program terminates in about one second, as expected:
           }
         }
 
-It is __not__ sufficient to synchronize only the write method! In fact,
+It is __not__ sufficient to synchronize only the write method. In fact,
 synchronization has __no effect__ unless both __read__ and __write__ operations
 are *synchronized*.
 
