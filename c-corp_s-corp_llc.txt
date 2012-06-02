@@ -1,0 +1,95 @@
+Title: C corp, LLC, S corp
+Date: June 02, 2012
+
+
+C Corporation
+=============
+
+    The C Corp is the preferred structure if you intend on seeking VC
+    funding or taking the company public. But forming a C Corp
+    involves more paperwork, legal fine print and potential double
+    taxation.
+
+    A C Corp is a separate entity that can sue and be sued. When it
+    comes to taxes, a C Corp is a separate tax payer that files its
+    own federal and state (where applicable) tax returns. This means
+    that profits are first taxed with the corporation. Then, if the
+    corporation decides to take that profit and distribute dividends
+    to shareholders, the dividends are taxed again (this time, on each
+    shareholder’s personal tax statement).
+
+    If your company is considering raising venture capital down the 
+    road, VC firms will most likely choose the C Corporation as the 
+    type of legal entity for their investments. 
+
+LLC (limited liability company)
+===============================
+
+    Company profits are "passed through" and reported on the personal
+    income tax return of the shareholders.
+
+    Protect your personal assets from any potential liabilities of the
+    company (whether from an unhappy customer, unpaid supplier or
+    anyone else who might pursue legal action).
+
+    LLCs just use an informal operating agreement.
+
+    Income and loss can be allocated disproportionately among the
+    owners. With an LLC, this type of agreement is fine. The two
+    owners simply agree to the arrangement and they will be taxed
+    accordingly to their "operating agreement."
+
+    Members and shareholders are able to pass company losses to their
+    personal income reporting.
+
+    In some circumstances, the LLC lets you pass more loss than in an
+    S Corporation, most notably when it comes to real estate. In an
+    LLC used for real estate investments, members are allowed to add
+    the amount of the mortgage to their basis for the purpose of
+    computing a loss. Clearly, that can add up to a significant
+    difference in your tax statement.
+
+    Multiple class of stock, priorities and preferences, are allowed.
+    You can have different membership classes.
+
+    Individual owners of an S Corporation or LLC are liable for any 
+    taxes owed on profits - whether that money is retained in the 
+    company or put in their wallets. 
+
+S Corporation
+=============
+
+    Company profits are "passed through" and reported on the personal
+    income tax return of the shareholders.
+
+    Protect your personal assets from any potential liabilities of the
+    company (whether from an unhappy customer, unpaid supplier or
+    anyone else who might pursue legal action).
+
+    Involves structure, formalities and compliance obligations, which
+    can be too burdensome for the solo entrepreneur, in other words, a
+    "payroll of one." If you incorporate as an S Corporation, you need
+    to set up a board of directors, file annual reports and other
+    business filings, hold shareholder’s meetings, keep records of
+    your meeting minutes, and generally operate at a higher level of
+    regulatory compliance than your business might need or want to
+    deal with.
+
+    More restrictions in terms of who can be a shareholder. For
+    example, an S Corp cannot have more than 100 shareholders. In
+    addition, all individual shareholders of an S Corp must be either
+    U.S. citizens or permanent residents.
+
+    Income and loss are assigned to each shareholder strictly based on
+    their pro-rata shares of ownership.
+
+    Members and shareholders are able to pass company losses to their
+    personal income reporting.
+
+    All shareholders own only one class of stock. An S Corporation can
+    have voting and non-voting shares, but cannot have distinctions
+    like common stock and preferred stock.
+
+    Individual owners of an S Corporation or LLC are liable for any 
+    taxes owed on profits - whether that money is retained in the 
+    company or put in their wallets. 
