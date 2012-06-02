@@ -1,0 +1,18 @@
+_______________________________________________________________________________________________________________________________
+Keystrokes                            Command name                 Action
+_______________________________________________________________________________________________________________________________
+C-x C-f File  -> Open File            find-file                    Find file and read it in a new buffer.
+C-x C-v                               find-alternate-file          Read an alternate file, replacing the one read with C-x C-f
+C-x i File    -> Insert File          insert-file Insert           file at cursor position.
+C-x C-s File  -> Save(current buffer) save-buffer                  Save file
+C-x C-w File  -> Save Buffer As       write-file                   Write buffer contents to file.
+C-x C-c File  -> Exit Emacs           save-buffers-killemacs       Exit Emacs.
+C-h                                   help-command                 Enter the online help system.
+C-h f Help    -> Describe Function    describe-function            Gives online help for a given command name.
+C-h k Help    -> Describe Key         describe-key                 Gives online help for a given keystroke sequence.
+C-h t Help    -> Emacs Tutorial       help-with-tutorial           Start the Emacs tutorial.
+C-h i Help    -> Browse Manuals       info-goto-emacscommand-node  Start the Info documentation reader
+C-g              Quit Minibuffer                                   Get out of command line at the bottom
+C-x 1         -> goto Buffer 1
+_______________________________________________________________________________________________________________________________
+
