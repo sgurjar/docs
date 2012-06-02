@@ -1,0 +1,144 @@
+Title: Analyizing IBM heap and thread dumps
+Date: 2012-03-05
+
+
+websphere 7
+ibmjdk 6
+
+print threaddump from javacore file
+
+look for section like following in
+
+  0SECTION       THREADS subcomponent dump routine
+  NULL           =================================
+  NULL
+  1XMCURTHDINFO  Current thread
+
+thats where threaddump start from.
+
+to print all the threads that were stuck on socket read
+
+  for f in *.txt;do
+    echo $f `grep -c "3XMTHREADINFO " $f` `grep "4XESTACKTRACE " $f |  grep -c socketRead `
+  done
+
+check core file for heap size
+  2CIUSERARG               -Xms256m
+  2CIUSERARG               -Xmx1024m
+
+"IBM Monitoring and Diagnostic Tools for Java - Memory Analyzer" works for analyzing
+.phd dump files.
+
+java/bin/jdmpview
+java/jre/bin/jextract
+
+$jextract -help
+Usage: jextract dump_name [output_filename] [options]
+ output filename defaults to dump_name.zip
+    or dump_name.xml if -nozip option specified
+ options:
+   -help         print this usage message
+   -nozip        don't create an archive file
+   -v            enable verbose output
+
+jextract is useful with coredumps.
+
+sanp trace files:
+-----------------
+
+http://publib.boulder.ibm.com/infocenter/realtime/v1r0/index.jsp?topic=%2Fcom.ibm.rt.doc.10%2Fdiag%2Ftools%2Fdumpagents_snaptrace.html
+
+Using the trace formatter
+
+The trace formatter is a Java™ program that runs on any platform and can format
+a trace file from any platform. The formatter, which is shipped with the SDK in
+core.jar, also requires a file called TraceFormat.dat, which contains the
+formatting templates. This file is shipped in jre/lib.
+
+To use the trace formatter, type:
+
+  java com.ibm.jvm.format.TraceFormat <input_filespec> [<output_filespec>] [options]
+
+where
+
+<input_filespec>  is the name of the binary trace file to be formatted,
+
+<output_filespec> is the optional output filename. If it is not specified,
+                  the default output file name is input_filespec.fmt.
+
+The options are:
+
+  -summary
+      Prints a summary of the trace file.
+  -datdir
+      Gives the location of the .dat files for processing a trace files produced
+      by a pre-5.0 JVM. The .dat files must be from a JVM with a greater or equal
+      version number to the trace files. The .dat files can not be from a 5.0 JVM.
+  -uservmid
+      Specifies a user string to be inserted in each formatted tracepoint. The
+      string aids reading or parsing when several different JVMs or JVM runs are
+      traced for comparison. It allows easy identification within the file of
+      which JVM owns the trace output that is being inspected.
+  -indent
+      Specifies that the formatter will indent trace messages at each Entry
+      trace point and outdent trace messages at each Exit trace point. The
+      default is not to indent the messages.
+
+Examples of formatting binary trace file trace1:
+
+    Produce a summary of the trace file:
+
+    java com.ibm.jvm.format.TraceFormat trace1 -summary
+
+
+/usr/local/opt/was/was70/java/jre/lib/TraceFormat.dat
+
+====sg3257@fipe201:/appl/as/tmp/thread-dumps
+$java com.ibm.jvm.format.TraceFormat Snap.20120305.050755.684202.0003.trc /tmp/Snap.20120305.050755.684202.0003.trc.out
+*** Starting data extraction from binary trace file(s)
+*** Locating formatting template files
+*** Found /usr/local/opt/was/was70/java/jre/lib/J9TraceFormat.dat
+*** Found /usr/local/opt/was/was70/java/jre/lib/TraceFormat.dat
+*** Loading further formatting templates from /usr/local/opt/was/was70/java/jre/lib/TraceFormat.dat
+*** Extracting 191 buffers from Snap.20120305.050755.684202.0003.trc
+*** Sorting buffers
+*** Starting formatting of entries into text file /tmp/Snap.20120305.050755.684202.0003.trc.out
+*** Number of traced threads = 191
+0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+*** Number of formatted tracepoints = 30580
+*** Formatting complete
+*** Formatted output written to file: /tmp/Snap.20120305.050755.684202.0003.trc.out
+0 errors were detected during formatting
+
+jdk diagnosis guide
+http://download.boulder.ibm.com/ibmdl/pub/software/dw/jdk/diagnosis/diag60.pdf
+
+
+========================
+GC Log native_stderr.log
+========================
+
+Allocation failures
+-------------------
+When an attempt is made to allocate to the heap but insufficient memory is
+available, an allocation failure is triggered. The output produced depends on the
+area of the heap in which the allocation failure occurred.
+
+<af type="nursery">
+  Indicates that an allocation failure has occurred when attempting to
+  allocate to the new area. The id attribute shows the index of the type of
+  allocation failure that has occurred.
+    timestamp   shows a local timestamp at the time of the allocation failure.
+    intervalms  shows the number of milliseconds elapsed since the previous
+                allocation failure of that type.
+
+<minimum>
+  Shows the number of bytes requested by the allocation that triggered the
+  failure. Following the garbage collection, freebytes might drop by more
+  than this amount. The reason is that the free list might have been
+  discarded or the Thread Local Heap (TLH) refreshed.
+
+IBM Thread and Monitor Dump analyzer for java.
+
+look for current thread in thread dump.
+
