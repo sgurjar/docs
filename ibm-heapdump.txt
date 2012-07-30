@@ -91,9 +91,8 @@ Examples of formatting binary trace file trace1:
     java com.ibm.jvm.format.TraceFormat trace1 -summary
 
 
-/usr/local/opt/was/was70/java/jre/lib/TraceFormat.dat
+$WAS_HOME/java/jre/lib/TraceFormat.dat
 
-====sg3257@fipe201:/appl/as/tmp/thread-dumps
 $java com.ibm.jvm.format.TraceFormat Snap.20120305.050755.684202.0003.trc /tmp/Snap.20120305.050755.684202.0003.trc.out
 *** Starting data extraction from binary trace file(s)
 *** Locating formatting template files
