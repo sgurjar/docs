@@ -11,5 +11,5 @@ goto :eof
 #==========================
 import sys
 
-print sys.args
+print sys.argv
 ```
