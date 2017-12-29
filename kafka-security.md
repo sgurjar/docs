@@ -104,7 +104,15 @@ consumer = new KafkaConsumer<>(p);
 ```
 
 ## Docs
-* Kafka Security Documentation     | https://kafka.apache.org/0110/documentation.html#security
-* KIP-11 - Authorization Interface | https://cwiki.apache.org/confluence/display/KAFKA/KIP-11+-+Authorization+Interface
-* Kafka Security Proposal          | https://cwiki.apache.org/confluence/display/KAFKA/Security
-* KAFKA-1682                       | https://issues.apache.org/jira/browse/KAFKA-1682
+* Kafka Security Documentation
+  * https://kafka.apache.org/0110/documentation.html#security
+* KIP-11 - Authorization Interface
+  * https://cwiki.apache.org/confluence/display/KAFKA/KIP-11+-+Authorization+Interface
+* Kafka Security Proposal
+  * https://cwiki.apache.org/confluence/display/KAFKA/Security
+* KAFKA-1682
+  * https://issues.apache.org/jira/browse/KAFKA-1682
+* Simple Authentication and Security Layer (SASL)
+  * https://tools.ietf.org/html/rfc4422
+* Salted Challenge Response Authentication Mechanism (SCRAM) SASL and GSS-API Mechanisms
+  * https://tools.ietf.org/html/rfc5802
