@@ -103,6 +103,38 @@ producer = new KafkaProducer<>(p);
 consumer = new KafkaConsumer<>(p);
 ```
 
+## Authorization
+Add following two properties to `server.properties`
+```
+super.users=User:admin
+authorizer.class.name=kafka.security.auth.SimpleAclAuthorizer
+```
+
+#### Use `bin/kafka-acls.sh` to add/remove ACL
+
+##### Add Producer
+```
+bin/kafka-acls.sh \
+  --authorizer-properties zookeeper.connect=192.168.56.103:2181 \
+  --add \
+  --allow-principal User:bob \
+  --operation Write \
+  --operation Describe \
+  --topic MY_TOPIC
+```
+##### Add Consumer
+```
+bin/kafka-acls.sh \
+  --authorizer-properties zookeeper.connect=192.168.56.103:2181 \
+  --add \
+  --allow-principal User:alice \
+  --consumer \
+  --topic MY_TOPIC \
+  --group \*
+  
+# * for all groups. \* disable shell expension.
+```
+
 ## Docs
 * Kafka Security Documentation
   * https://kafka.apache.org/0110/documentation.html#security
