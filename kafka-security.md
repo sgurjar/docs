@@ -148,3 +148,5 @@ bin/kafka-acls.sh \
   * https://tools.ietf.org/html/rfc4422
 * Salted Challenge Response Authentication Mechanism (SCRAM) SASL and GSS-API Mechanisms
   * https://tools.ietf.org/html/rfc5802
+* Kafka ACLs in Practice
+  * https://developer.ibm.com/opentech/2017/05/31/kafka-acls-in-practice/
