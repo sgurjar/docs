@@ -4,7 +4,7 @@ Following are main parts-
 * `Loss Function`, feedback signal used for learning. Are we getting closer to learning.
 * `Optimizer`, determines how learning proceeds. Adjust the weights to get close to targets.
 
-![](https://github.com/sgurjar/docs/blob/master/__assets/neural-network.png)
+![](https://github.com/sgurjar/docs/blob/master/__assets/neural-network-1.png)
 
 ## Layers
 
