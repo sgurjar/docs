@@ -63,6 +63,35 @@ It represents a __measure of success__ for the task at hand.
 Determines how the network will be updated based on the loss function.
 It implements a specific variant of stochastic gradient descent (SGD).
 
+## Data Batches
+
+* The first axis (axis 0, because indexing starts at 0) in all data
+  tensors in deep learning will be the samples axis (sometimes called the
+  samples dimension). (Number of samples.)
+
+* Deep-learning models don't process an entire dataset at once; rather,
+  they break the data into small batches.
+
+  - here's one batch of MNIST digits, with batch size of 128:
+
+```python
+batch = train_images[:128]
+```
+  - And here’s the next batch:
+
+```python
+batch = train_images[128:256]
+```
+  - And the `nth` batch:
+
+```python
+batch = train_images[128 * n:128 * (n + 1)]
+```
+
+When considering such a batch tensor, the first axis (axis 0) is called
+the batch axis or batch dimension.  This is a term frequently encounter
+when using Keras and other deep-learning libraries.
+
 ## Structure of Keras Model
 
 ### input data
