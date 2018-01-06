@@ -74,19 +74,19 @@ It implements a specific variant of stochastic gradient descent (SGD).
 
   - here's one batch of MNIST digits, with batch size of 128:
 
-```python
-batch = train_images[:128]
-```
+    ```python
+    batch = train_images[:128]
+    ```
   - And here’s the next batch:
 
-```python
-batch = train_images[128:256]
-```
+    ```python
+    batch = train_images[128:256]
+    ```
   - And the `nth` batch:
 
-```python
-batch = train_images[128 * n:128 * (n + 1)]
-```
+    ```python
+    batch = train_images[128 * n:128 * (n + 1)]
+    ```
 
 When considering such a batch tensor, the first axis (axis 0) is called
 the batch axis or batch dimension.  This is a term frequently encounter
