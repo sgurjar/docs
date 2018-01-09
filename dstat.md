@@ -127,5 +127,6 @@ To output results to a file use
 ```
 
 ## References
+* [github.com/dagwieers/dstat/blob/master/docs/dstat-paper.adoc](https://github.com/dagwieers/dstat/blob/master/docs/dstat-paper.adoc)
 * [tobert.github.io/pages/als-cassandra-21-tuning-guide.html](https://tobert.github.io/pages/als-cassandra-21-tuning-guide.html)
 * [linux.die.net/man/1/dstat](https://linux.die.net/man/1/dstat)
