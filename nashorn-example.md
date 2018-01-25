@@ -5,7 +5,7 @@
 ### script to print diff between two properties files.
 
 ```javascript
-#!/export/bbt/tools/java/bin/jjs
+#!/export/tools/java/bin/jjs
 
 /////////////////////////////////////
 // script to print diff between
