@@ -62,3 +62,19 @@ if (arguments.length != 2) {
   diff(load_prop(arguments[0]), load_prop(arguments[1]));
 }
 ```
+
+### print JMX url for local JVMs
+
+* `sun.tools.jconsole.LocalVirtualMachine` is in `jconsole.jar`
+
+```
+#!/bin/bash
+
+# PerfDisableSharedMem so jrunscript wont find itsel
+
+/usr/java/jdk1.8.0_20/bin/jrunscript -J-XX:+PerfDisableSharedMem -cp /usr/java/jdk1.8.0_20/lib/jconsole.jar -e '
+var lvms = Packages.sun.tools.jconsole.LocalVirtualMachine.getAllVirtualMachines()
+for each (var pid in lvms.keySet()) {
+  print(pid + "\t" + lvms.get(pid) + "\t" + lvms.get(pid).connectorAddress() );
+}'
+```
