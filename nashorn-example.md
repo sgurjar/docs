@@ -70,11 +70,11 @@ if (arguments.length != 2) {
 ```
 #!/bin/bash
 
-# PerfDisableSharedMem so jrunscript wont find itsel
+# PerfDisableSharedMem so that jrunscript wont find itself
 
 /usr/java/jdk1.8.0_20/bin/jrunscript -J-XX:+PerfDisableSharedMem -cp /usr/java/jdk1.8.0_20/lib/jconsole.jar -e '
 var lvms = Packages.sun.tools.jconsole.LocalVirtualMachine.getAllVirtualMachines()
 for each (var pid in lvms.keySet()) {
-  print(pid + "\t" + lvms.get(pid) + "\t" + lvms.get(pid).connectorAddress() );
+  print(pid + "\t" + lvms.get(pid) + "\t" + lvms.get(pid).connectorAddress());
 }'
 ```
