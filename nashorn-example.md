@@ -66,6 +66,7 @@ if (arguments.length != 2) {
 ### print JMX url for local JVMs
 
 * `sun.tools.jconsole.LocalVirtualMachine` is in `jconsole.jar`
+* To call static method we need to use `Packages.` syntax. See https://stackoverflow.com/questions/28238139/how-can-i-access-a-static-method-only-class-via-scriptengine and https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/nashorn/api.html
 
 ```
 #!/bin/bash
@@ -73,7 +74,7 @@ if (arguments.length != 2) {
 # PerfDisableSharedMem so that jrunscript wont find itself
 
 /usr/java/jdk1.8.0_20/bin/jrunscript -J-XX:+PerfDisableSharedMem -cp /usr/java/jdk1.8.0_20/lib/jconsole.jar -e '
-var lvms = Packages.sun.tools.jconsole.LocalVirtualMachine.getAllVirtualMachines()
+var lvms = Packages.sun.tools.jconsole.LocalVirtualMachine.getAllVirtualMachines();
 for each (var pid in lvms.keySet()) {
   print(pid + "\t" + lvms.get(pid) + "\t" + lvms.get(pid).connectorAddress());
 }'
