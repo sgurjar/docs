@@ -66,9 +66,10 @@ if (arguments.length != 2) {
 ### print JMX url for local JVMs
 
 * `sun.tools.jconsole.LocalVirtualMachine` is in `jconsole.jar`
-* To call static method we need to use `Packages.` syntax. See https://stackoverflow.com/questions/28238139/how-can-i-access-a-static-method-only-class-via-scriptengine and https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/nashorn/api.html
+* To call static method we need to use `Packages.` syntax or `Java.type`. See https://stackoverflow.com/questions/28238139/how-can-i-access-a-static-method-only-class-via-scriptengine and https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/nashorn/api.html
+* I couldnt set classpath on shebang, so I use `jrunscript` with `-e` to pass inline script.
 
-```
+```javascript
 #!/bin/bash
 
 # PerfDisableSharedMem so that jrunscript wont find itself
@@ -78,4 +79,62 @@ var lvms = Packages.sun.tools.jconsole.LocalVirtualMachine.getAllVirtualMachines
 for each (var pid in lvms.keySet()) {
   print(pid + "\t" + lvms.get(pid) + "\t" + lvms.get(pid).connectorAddress());
 }'
+```
+
+## Call a Mbean method using PID of the local JVM.
+
+```javascript
+#!/bin/bash
+
+# ===!!!!! type value of following variables !!!!!===
+
+#java_dir=/your/path/here/java
+#prog_name=TYPE_PGREP_STRING_HERE
+#user=TYPE_USER
+# =================================
+
+pid=$(pgrep -u $user -f $prog_name)
+
+if [[ ! $pid ]]; then
+  echo "$prog_name is NOT running"
+  exit 1
+fi
+
+# PerfDisableSharedMem so jrunscript wont find itsel
+
+$java_dir/bin/jrunscript -J-XX:+PerfDisableSharedMem -J-Dmypid=$pid -cp $java_dir/lib/jconsole.jar -e '
+
+// import packages
+System              = Java.type("java.lang.System")
+LocalVirtualMachine = Java.type("sun.tools.jconsole.LocalVirtualMachine")
+JMXConnectorFactory = Java.type("javax.management.remote.JMXConnectorFactory")
+Integer             = Java.type("java.lang.Integer")
+
+var pid = System.getProperty("mypid")
+var lvms = LocalVirtualMachine.getAllVirtualMachines()
+if (pid == null) {
+  print("No pid")
+  exit(1)
+} else {
+  var myjvm = lvms.get(Integer.parseInt(pid))
+  if (myjvm == null) {
+    print("No JVM for pid " + pid)
+    exit(1)
+  } else {
+    var url = myjvm.connectorAddress()
+    var jmx = JMXConnectorFactory.connect(new javax.management.remote.JMXServiceURL(url))
+    try {
+      var mbeanserver = jmx.getMBeanServerConnection()
+      var cmdline = mbeanserver.invoke(new javax.management.ObjectName("com.sun.management:type=DiagnosticCommand"),
+                                       "vmCommandLine", // operationName
+                                       null,            // params
+                                       null)            // signature
+      print(cmdline)
+    }
+    finally {
+      jmx.close()
+    }
+  }
+}
+'
 ```
