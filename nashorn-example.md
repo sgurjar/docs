@@ -86,12 +86,11 @@ for each (var pid in lvms.keySet()) {
 ```bash
 #!/bin/bash
 
-# ===!!!!! type value of following variables !!!!!===
-
-#java_dir=/your/path/here/java
-#prog_name=TYPE_PGREP_STRING_HERE
-#user=TYPE_USER
-# =================================
+## !!!! CHANGE US !!!!
+java_dir=/your/path/to/java/
+prog_name=PGREP_STRING
+user=your_user
+########  
 
 pid=$(pgrep -u $user -f $prog_name)
 
@@ -102,13 +101,16 @@ fi
 
 # PerfDisableSharedMem so jrunscript wont find itsel
 
+# jdk 1.8 supports ECMA 5.1
+# check with jrunscript -q
+
 $java_dir/bin/jrunscript -J-XX:+PerfDisableSharedMem -J-Dmypid=$pid -cp $java_dir/lib/jconsole.jar -e '
 
-// import packages
 System              = Java.type("java.lang.System")
 LocalVirtualMachine = Java.type("sun.tools.jconsole.LocalVirtualMachine")
 JMXConnectorFactory = Java.type("javax.management.remote.JMXConnectorFactory")
 Integer             = Java.type("java.lang.Integer")
+ObjectName          = Java.type("javax.management.ObjectName")
 
 var pid = System.getProperty("mypid")
 var lvms = LocalVirtualMachine.getAllVirtualMachines()
@@ -125,11 +127,25 @@ if (pid == null) {
     var jmx = JMXConnectorFactory.connect(new javax.management.remote.JMXServiceURL(url))
     try {
       var mbeanserver = jmx.getMBeanServerConnection()
-      var cmdline = mbeanserver.invoke(new javax.management.ObjectName("com.sun.management:type=DiagnosticCommand"),
-                                       "vmCommandLine", // operationName
-                                       null,            // params
-                                       null)            // signature
+      var cmdline = mbeanserver.invoke(
+                      new ObjectName("com.sun.management:type=DiagnosticCommand"),
+                      "vmCommandLine",
+                      null,
+                      null)
       print(cmdline)
+
+      var os = new ObjectName("java.lang:type=OperatingSystem")
+      var mbeaninfo = mbeanserver.getMBeanInfo(os)
+      var osinfo = new Object()
+      for each (var attr in mbeaninfo.attributes) {
+        switch(attr.name) { // UnixOperatingSystemMXBean has them
+          case "OpenFileDescriptorCount":
+          case "MaxFileDescriptorCount" :
+            osinfo[attr.name] = mbeanserver.getAttribute(os, attr.name)
+        }
+      }
+      print("fd(open=" + osinfo.OpenFileDescriptorCount
+          + ", max=" + osinfo.MaxFileDescriptorCount+")" )
     }
     finally {
       jmx.close()
