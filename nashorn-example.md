@@ -69,7 +69,7 @@ if (arguments.length != 2) {
 * To call static method we need to use `Packages.` syntax or `Java.type`. See https://stackoverflow.com/questions/28238139/how-can-i-access-a-static-method-only-class-via-scriptengine and https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/nashorn/api.html
 * I couldnt set classpath on shebang, so I use `jrunscript` with `-e` to pass inline script.
 
-```javascript
+```bash
 #!/bin/bash
 
 # PerfDisableSharedMem so that jrunscript wont find itself
@@ -83,7 +83,7 @@ for each (var pid in lvms.keySet()) {
 
 ## Call a Mbean method using PID of the local JVM.
 
-```javascript
+```bash
 #!/bin/bash
 
 # ===!!!!! type value of following variables !!!!!===
