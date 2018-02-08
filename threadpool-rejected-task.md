@@ -8,10 +8,10 @@ There are `maximumPoolSize` threads are running and queue is full then new tasks
 `RejectedExecutionHandler.rejectedExecution(Runnable, ThreadPoolExecutor)` is called.
 
 ### Order is
-1. If `corePoolSize` threads are running.
-2. Add new tasks to `workQueue`.
-3. `workQueue` is full, for each  new task createnew thread upto `maximumPoolSize` threads.
-4. if `maximumPoolSize` threads are running and `workQueue` is full reject the task and call `RejectedExecutionHandler`.
+1. Run up to `corePoolSize` threads first.
+2. Add any  new tasks to `workQueue`.
+3. If `workQueue` is full, for each new task create new thread up to `maximumPoolSize` threads.
+4. If `maximumPoolSize` threads are running and `workQueue` is full __reject__ the task and call `RejectedExecutionHandler`.
 
 ### Example
 
