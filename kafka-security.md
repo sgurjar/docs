@@ -135,6 +135,32 @@ bin/kafka-acls.sh \
 # * for all groups. \* disable shell expension.
 ```
 
+## Disable inter broker security
+With config
+```
+config/server.properties
+
+    security.inter.broker.protocol=PLAINTEXT
+    listeners=SASL_PLAINTEXT://192.168.56.101:9092
+    advertised.listeners=SASL_PLAINTEXT://192.168.56.101:9092
+```
+Error at server start
+```
+$cat server.log
+
+java.lang.IllegalArgumentException: requirement failed: 
+inter.broker.listener.name must be a listener name defined in advertised.listeners. 
+The valid options based on currently configured listeners are SASL_PLAINTEXT
+        at scala.Predef$.require(Predef.scala:224)
+        at kafka.server.KafkaConfig.validateValues(KafkaConfig.scala:1179)
+        at kafka.server.KafkaConfig.<init>(KafkaConfig.scala:1155)
+        at kafka.server.KafkaConfig$.fromProps(KafkaConfig.scala:867)
+        at kafka.server.KafkaConfig$.fromProps(KafkaConfig.scala:864)
+        at kafka.server.KafkaServerStartable$.fromProps(KafkaServerStartable.scala:28)
+        at kafka.Kafka$.main(Kafka.scala:58)
+        at kafka.Kafka.main(Kafka.scala)
+```
+
 ## Docs
 * Kafka Security Documentation
   * https://kafka.apache.org/0110/documentation.html#security
