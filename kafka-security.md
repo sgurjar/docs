@@ -134,6 +134,53 @@ bin/kafka-acls.sh \
   
 # * for all groups. \* disable shell expension.
 ```
+````
+# user sansa is allowed to producer to topic arryn
+[kafka] ubuntu@ubuntu:~/kafka
+$ bin/kafka-acls.sh \
+>   --authorizer-properties zookeeper.connect=192.168.56.101:2181 \
+>   --add \
+>   --producer \
+>   --allow-principal User:sansa \
+>   --topic arryn
+Adding ACLs for resource `Topic:arryn`:
+        User:sansa has Allow permission for operations: Describe from hosts: *
+        User:sansa has Allow permission for operations: Write from hosts: *
+
+Adding ACLs for resource `Cluster:kafka-cluster`:
+        User:sansa has Allow permission for operations: Create from hosts: *
+
+Current ACLs for resource `Topic:arryn`:
+        User:sansa has Allow permission for operations: Describe from hosts: *
+        User:sansa has Allow permission for operations: Write from hosts: *
+
+
+# user arya is allowed to consume from topic arryn using any consumer group
+[kafka] ubuntu@ubuntu:~/kafka
+$ bin/kafka-acls.sh \
+>    --authorizer-properties zookeeper.connect=192.168.56.101:2181 \
+>    --add \
+>    --consumer \
+>    --allow-principal User:arya \
+>    --topic arryn \
+>    --group \*
+
+Adding ACLs for resource `Topic:arryn`:
+        User:arya has Allow permission for operations: Read from hosts: *
+        User:arya has Allow permission for operations: Describe from hosts: *
+
+Adding ACLs for resource `Group:*`:
+        User:arya has Allow permission for operations: Read from hosts: *
+
+Current ACLs for resource `Topic:arryn`:
+        User:sansa has Allow permission for operations: Describe from hosts: *
+        User:arya has Allow permission for operations: Read from hosts: *
+        User:arya has Allow permission for operations: Describe from hosts: *
+        User:sansa has Allow permission for operations: Write from hosts: *
+
+Current ACLs for resource `Group:*`:
+        User:arya has Allow permission for operations: Read from hosts: *
+````
 
 ## Disable inter broker security
 With config
