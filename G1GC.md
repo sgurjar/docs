@@ -1,3 +1,6 @@
+## [Garbage First Garbage Collector Tuning](http://www.oracle.com/technetwork/articles/java/g1gc-1984535.html) 
+_by Monica Beckwith_
+
 * When G1 GC determines that a garbage collection is necessary, it
   collects the regions with the least live data first (garbage first).
 * The G1 GC achieves automatic memory management through the following operations:
