@@ -154,3 +154,39 @@ if (pid == null) {
 }
 '
 ```
+
+## list kafka brokers from zookeeper
+```
+#!/bin/bash
+javadir=/opt/app/java
+zkdir=/opt/app/zookeeper
+zkurl="my.zookeeper.host1.com:2181,my.zookeeper.host2.com:2181"
+clspath=$zkdir/zookeeper-3.4.10.jar:$(echo $zkdir/lib/*.jar | tr ' ' ':')
+
+$javadir/bin/jrunscript \
+  -J-XX:+PerfDisableSharedMem \
+  -cp $clspath \
+  -J-Dzkurl=$zkurl \
+  -e '
+var debug = function(msg){java.lang.System.err.println("### " + msg)}
+var zkurl = java.lang.System.getProperty("zkurl" ,"localhost:2181")
+var session_timeout_ms = 30 * 60 * 1000
+var watcher = function(event) { debug(event) }
+var readonly = true
+debug("connecting to " + zkurl)
+var zk = new org.apache.zookeeper.ZooKeeper(zkurl, session_timeout_ms, watcher, readonly)
+debug(zkurl + " " + zk.getState())
+try {
+  zk.getChildren("/brokers/ids", false).forEach(function(broker_id) {
+    var stat = new org.apache.zookeeper.data.Stat()
+    var data = new java.lang.String(zk.getData("/brokers/ids/" + broker_id, false, stat))
+    debug(data)
+    json = JSON.parse(data)
+    print(broker_id + " " + json.jmx_port + " " + json.endpoints[0])
+  })
+}
+finally {
+  zk.close();
+}
+'
+```
